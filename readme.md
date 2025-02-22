@@ -7,7 +7,9 @@ This project creates a scatter plot visualization using React. The system is bui
 ## Files and structures
 
 src/ScatterPlot.js - Contains the scatter plot implementation.
+
 src/App.js - The main component that executes the scatter plot.
+
 package.json - Project dependencies and scripts.
 
 ## Installation and setup
@@ -25,8 +27,11 @@ The project will run at http://localhost:3000
 ## Dependencies Used
 
 React.js - Frontend framework.
+
 D3.js - Data visualization library.
+
 React-Select - Custom dropdown selection.
+
 Material UI - UI components for table display.
 
 ## Usage Instructions
