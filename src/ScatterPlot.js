@@ -9,8 +9,8 @@ const attributeOptions = [
   { value: "us_gross", label: "us_Gross" },
   { value: "worldwide_gross", label: "Worldwide Gross" },
   { value: "rotten_rating", label: "rotten_Rating" },
-  { value: "imdb_rating", label: "imbd_Rating" },
-  { value: "imdb_votes", label: "imbd_Votes" }
+  { value: "imdb_rating", label: "imdb_Rating" },
+  { value: "imdb_votes", label: "imdb_Votes" }
 ];
 
 const colorOptions = [
@@ -27,8 +27,8 @@ const osOptions = [
   { value: "us_gross", label: "us_Gross" },
   { value: "worldwide_gross", label: "Worldwide Gross" },
   { value: "rotten_rating", label: "rotten_Rating" },
-  { value: "imdb_rating", label: "imbd_Rating" },
-  { value: "imdb_votes", label: "imbd_Votes" }
+  { value: "imdb_rating", label: "imdb_Rating" },
+  { value: "imdb_votes", label: "imdb_Votes" }
 ];
 
 const MovieVisualization = () => {
@@ -84,7 +84,7 @@ const MovieVisualization = () => {
       .attr("class", "data-point");
 
     canvas.append("g")
-      .attr("transform", `translate(0,${height - 80})`)
+      .attr("transform", `translate(0, 620)`)
       .call(d3.axisBottom(xScale))
       .selectAll("text")
       .style("font-size", "18px")
