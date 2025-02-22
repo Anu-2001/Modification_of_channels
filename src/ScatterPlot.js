@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import * as d3 from "d3";
 import Select from "react-select";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
-import movieData from "./movie.json";
+import movieData from "./movie.json"; //import dataset
 
+//define selectable options for x and y axes
 const attributeOptions = [
   { value: "Budget", label: "budget" },
   { value: "us_gross", label: "us_Gross" },
@@ -12,7 +13,7 @@ const attributeOptions = [
   { value: "imdb_rating", label: "imdb_Rating" },
   { value: "imdb_votes", label: "imdb_Votes" }
 ];
-
+//color options
 const colorOptions = [
   { value: "none", label: "None" },
   { value: "genre", label: "Genre" },
@@ -21,7 +22,7 @@ const colorOptions = [
   { value: "release", label: "Release Date" },
   { value: "rating", label: "Rating" }
 ];
-
+//opacity and size options
 const osOptions = [
   { value: "none", label: "None" },
   { value: "us_gross", label: "us_Gross" },
@@ -31,7 +32,8 @@ const osOptions = [
   { value: "imdb_votes", label: "imdb_Votes" }
 ];
 
-const MovieVisualization = () => {
+const MovieVis = () => {
+  // States to manage selected attributes for scatter plot visualization
   const [xAxis, setXAxis] = useState(attributeOptions[4]);
   const [yAxis, setYAxis] = useState(attributeOptions[1]);
   const [colorBy, setColorBy] = useState(attributeOptions[5]);
@@ -40,13 +42,15 @@ const MovieVisualization = () => {
   const [highlightedData, setHighlightedData] = useState([]);
 
   useEffect(() => {
+    // Effect Hook to redraw chart whenever selections change
     renderChart();
   }, [xAxis, yAxis, colorBy, opacityBy, sizeBy]);
 
   const renderChart = () => {
+    // Remove any existing SVG elements before redrawing
     d3.select("#chart-area").selectAll("*").remove();
 
-    const width = 900;
+    const width = 900; //dimensions for the scatter plot
     const height = 700;
 
     const canvas = d3.select("#chart-area")
@@ -57,11 +61,11 @@ const MovieVisualization = () => {
 
     const xScale = d3.scaleLinear()
       .domain([0, d3.max(movieData, d => +d[xAxis.value])])
-      .range([80, width - 80]);
+      .range([80, 820]);
 
     const yScale = d3.scaleLinear()
       .domain([0, d3.max(movieData, d => +d[yAxis.value])])
-      .range([height - 80, 80]);
+      .range([620, 80]);
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
     const opacityScale = d3.scaleLinear()
@@ -72,6 +76,7 @@ const MovieVisualization = () => {
       .domain([0, d3.max(movieData, d => +d[sizeBy.value])])
       .range([6, 18]);
 
+      // Plot each movie as a circle in the scatter plot
     canvas.selectAll("circle")
       .data(movieData)
       .enter()
@@ -83,6 +88,7 @@ const MovieVisualization = () => {
       .attr("opacity", d => opacityScale(+d[opacityBy.value]))
       .attr("class", "data-point");
 
+      //Append X-axis with formatted text
     canvas.append("g")
       .attr("transform", `translate(0, 620)`)
       .call(d3.axisBottom(xScale))
@@ -90,13 +96,14 @@ const MovieVisualization = () => {
       .style("font-size", "18px")
       .style("font-weight", "bold");
 
+      //Append Y-axis with formatted text
     canvas.append("g")
       .attr("transform", "translate(80,0)")
       .call(d3.axisLeft(yScale))
       .selectAll("text")
       .style("font-size", "18px")
       .style("font-weight", "bold");
-
+    //Enable brush selection to highlight data points
     const brush = d3.brush()
       .extent([[80, 80], [width - 80, height - 80]])
       .on("end", ({ selection }) => {
@@ -112,7 +119,7 @@ const MovieVisualization = () => {
           setHighlightedData([]);
         }
       });
-
+    //add brush interaction to the SVG
     canvas.append("g").call(brush);
   };
 
@@ -157,4 +164,4 @@ const MovieVisualization = () => {
   );
 };
 
-export default MovieVisualization;
+export default MovieVis;
